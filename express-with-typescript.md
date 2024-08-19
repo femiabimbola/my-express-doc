@@ -93,7 +93,7 @@ const app: Express = express();
 const port = process.env.PORT || 3000;
 
 app.get("/", (req: Request, res: Response) => {
-  res.status(200).send("Express + TypeScript Server");
+  res.status(200).send("Express with TypeScript Server");
 });
 
 app.listen(port, () => {
@@ -104,8 +104,8 @@ Then rewrite the the scripts to run your application
 
 ```json
 "dev": "nodemon  src/index.ts",
-"build": "npx tsc"
-"start":"node dist/index.js",
+"build": "npx tsc",
+"start":"node dist/index.js"
 ```
 - `dev: nodemon src/index.ts` is to run the code
 - `build: npx tsc` to generate the compiled code
