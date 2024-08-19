@@ -1,6 +1,13 @@
 ## Using the Params & Query in the request
-The Mock user database
+This methods are used to filter get results from a database <br/>
+For  examples, Google results will use queries and maybe params too<br/>
+
+```routes.ts
+import { Router} from "express";
+const router = Router();
 ```
+The Mock user database
+```routes.ts
 interface User {
   id: number;
   name: string;
@@ -39,7 +46,7 @@ export const getUsersById = (req: Request, res: Response) => {
 ### Using the query string
 
 ```
-http://localhost:3000/products/key=value&key2=value2
+http://localhost:3000/api/users?key=value&key2=value2
 ```
 The key is like a variable while the value is kind of attached to it<br/>
 It is use to filter the data you get from a source<br/>
@@ -48,17 +55,14 @@ It is use to filter the data you get from a source<br/>
 ```
 app.get('/api/users', getUsersByFilter)
 ```
-36.54
+The get user by filter | You need var=string & value=string
 ```
 export const getUsersByFilter = (req: Request, res: Response) => {
-  const {filter, value} = req.query
-
-  if (isNaN(parseId)) return res.status(400).send({msg: "Invalid Params"});
-
-  const user = mockUsers.find((user) => user.id === parseId);
-
-  if (!user) return res.status(404).send({msg: "No user found"});
-
-  return res.status(200).send({msg: user});
+  const {var, value} = req.query
+  if(!var || !value) return res.status(200).send({msg: "Filter or variable not entered"})
+  if(var && value) return res.status(200).send(
+    mockUsers.filter((user) => user[var].includes(value))
+  )
+  return res.status(200).send({msg: mockUsers})
 };
 ```

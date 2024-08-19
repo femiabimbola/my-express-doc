@@ -38,11 +38,13 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT;
+app.use(express.json()) //to accept json post request
 
 app.get('/', (req, res) => {
   res.send('Express with TypeScript Server');
 });
+
+const port = process.env.PORT;
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
