@@ -52,11 +52,12 @@ The key is like a variable while the value is kind of attached to it<br/>
 It is use to filter the data you get from a source<br/>
 `request.query` is used to filter the data
 
-```
+```routes.ts
 app.get('/api/users', getUsersByFilter)
 ```
 The get user by filter | You need var=string & value=string
-```
+
+```routes.ts
 export const getUsersByFilter = (req: Request, res: Response) => {
   const {var, value} = req.query
   if(!var || !value) return res.status(200).send({msg: "Filter or variable not entered"})
