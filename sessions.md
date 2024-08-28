@@ -33,3 +33,35 @@ console.log(request.session.id)
  ```index.ts
  request.session.visited = true
  ```
+
+Attaching a user to a session id after gotten from the database. You have modified it, so it won't be regenerate everytime
+```index.ts
+// find user is gotten from the datatbase during sign in and it attached to the session
+request.session.user = findUser
+```
+For example the status route can findout 
+
+```index.ts
+app.get("/api/auth/status", (req, res) => {
+  req.sessionStore.get(req.sessionID, (err, session) => {
+    console.log(session)
+  })
+  return req.session.user ? res.status(200).send(req.session.user) : res.status(401).send({msg: 'not auth"})
+})
+```
+
+A snippet of code in cart and users
+```index.ts
+app.post("api/cart", (req,res) => {
+  if(!req.session.user) return response.status(401).send({msg: "not auth"})
+  const {body: item} = req;
+  const {cart} = req.session
+  if(cart) {
+    cart.push(item)
+  } else {
+    req.session.cart = [item]
+  }
+  console.log(req.session)
+  return res.status(201).send(item)
+})
+```
