@@ -10,7 +10,7 @@ Then in the layout file. You start by
 ```app.tsx
 import session from 'express-session'
 
-app.use(session())
+app.use(session(sessionObject))
 ```
 The session function needs to be called with some parameter
 
@@ -23,8 +23,13 @@ const sessionObject = {
 }
 ```
 
-To get the session when a user is interacting with your app.
+To get the session when a user is interacting with your app. It is regenerated everytime you `GET` post.
 ```general.tsx
-console.log(request.session)
+console.log(request.session) 
 console.log(request.session.id)
 ```
+ But you have modify it now to not regenerate. You attached a property to the it to modified it. it prevent it from being regenerated.
+
+ ```index.ts
+ request.session.visited = true
+ ```
